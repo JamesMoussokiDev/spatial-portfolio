@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Tilt3D } from "@/components/tilt-3d";
 
 export function Hero() {
     const containerRef = useRef(null);
@@ -57,19 +58,24 @@ export function Hero() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.5, ease: "circOut" }}
-                    className="relative h-[500px] md:h-[700px] w-full flex items-center justify-center lg:justify-end"
+                    className="relative h-[500px] md:h-[700px] w-full flex items-center justify-center lg:justify-end perspective-1000"
                 >
-                    <div className="relative w-full h-full max-w-[800px]">
-                        <Image
-                            src="/hero-3d.png"
-                            alt="Futuristic Workspace 3D"
-                            fill
-                            className="object-contain drop-shadow-2xl"
-                            priority
+                    <Tilt3D className="relative w-full h-full max-w-[800px] flex items-center justify-center">
+                        <div className="relative w-full h-full" style={{ transform: "translateZ(50px)" }}>
+                            <Image
+                                src="/hero-3d.png"
+                                alt="Futuristic Workspace 3D"
+                                fill
+                                className="object-contain drop-shadow-2xl"
+                                priority
+                            />
+                        </div>
+                        {/* Floating Glow Effect behind image - moved deeper in Z */}
+                        <div
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/20 blur-[120px] -z-10 rounded-full mix-blend-screen"
+                            style={{ transform: "translateZ(-80px)" }}
                         />
-                        {/* Floating Glow Effect behind image */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/20 blur-[120px] -z-10 rounded-full mix-blend-screen" />
-                    </div>
+                    </Tilt3D>
                 </motion.div>
             </div>
 

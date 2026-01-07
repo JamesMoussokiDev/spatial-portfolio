@@ -26,23 +26,29 @@ export function TechStack() {
                 </p>
             </div>
 
-            <div className="relative flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 max-w-4xl mx-auto perspective-1000">
                 {technologies.map((tech, index) => (
                     <motion.div
                         key={tech.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
-                        whileHover={{ y: -5, scale: 1.05 }}
-                        className="group relative"
+                        whileHover={{
+                            scale: 1.1,
+                            rotateX: 10,
+                            rotateY: 10,
+                            z: 50,
+                            transition: { type: "spring", stiffness: 300 }
+                        }}
+                        className="group relative flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-colors backdrop-blur-md cursor-default"
+                        style={{ transformStyle: "preserve-3d" }}
                     >
                         {/* Glow backing */}
                         <div
                             className="absolute inset-0 blur-xl opacity-20 group-hover:opacity-60 transition-opacity duration-500 rounded-full"
                             style={{ backgroundColor: tech.color === "#000000" ? "#ffffff" : tech.color }}
                         />
-
                         <div className="relative px-6 py-3 bg-white/5 border border-white/10 rounded-full backdrop-blur-md flex items-center gap-3 transition-colors group-hover:bg-white/10 group-hover:border-white/20">
                             <span
                                 className="w-2 h-2 rounded-full shadow-[0_0_10px_currentColor]"
