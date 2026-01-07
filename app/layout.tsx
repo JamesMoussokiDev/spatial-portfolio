@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { PageTransition } from "@/components/page-transition";
+import { GlobalBackground } from "@/components/3d/global-background";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${inter.variable} font-sans antialiased text-foreground background-color min-h-screen selection:bg-primary selection:text-primary-foreground`}
       >
         <SmoothScroll>
+          <GlobalBackground />
           <PageTransition>
             {children}
           </PageTransition>
