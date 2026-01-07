@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { TechStack } from "@/components/tech-stack";
-import { SelectedWork } from "@/components/work/selected-work";
 import { Services } from "@/components/services";
 import { Process } from "@/components/process";
 import { Pricing } from "@/components/pricing";
@@ -14,7 +13,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TechStack />
-      <SelectedWork />
       <Services />
       <Process />
       <Pricing />
