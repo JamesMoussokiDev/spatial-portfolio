@@ -1,25 +1,33 @@
 "use client";
 
-import React, { useRef } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, Suspense } from "react";
+import { motion } from "framer-motion";
+import { Canvas } from "@react-three/fiber";
+import { Environment, PerspectiveCamera } from "@react-three/drei";
+import { VideoMonolith } from "@/components/3d/video-monolith";
 
 export function Hero() {
     const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end start"]
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative w-full min-h-screen flex items-center pt-20 overflow-hidden">
+        <section ref={containerRef} className="relative w-full h-[120vh] flex items-center pt-20 overflow-hidden">
 
-            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* 3D Scene Layer */}
+            <div className="absolute inset-0 z-0">
+                <Canvas gl={{ antialias: true, alpha: true }}>
+                    <Suspense fallback={null}>
+                        <PerspectiveCamera makeDefault position={[0, 0, 8]} />
+                        <Environment preset="city" />
+                        <VideoMonolith />
+                        {/* Ambient Particles could go here */}
+                    </Suspense>
+                </Canvas>
+            </div>
+
+            {/* Content Layer */}
+            <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pointer-events-none">
                 {/* Text Content - Left Side */}
-                <div className="max-w-2xl">
+                <div className="max-w-2xl pointer-events-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -34,11 +42,11 @@ export function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-8"
+                        className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 mix-blend-difference"
                     >
-                        Designing <br />
-                        through a <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">different lens.</span>
+                        Digital <br />
+                        Alchemist <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-white">Experiments.</span>
                     </motion.h1>
 
                     <motion.p
@@ -47,35 +55,13 @@ export function Hero() {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="text-lg md:text-xl text-muted-foreground/80 max-w-md leading-relaxed"
                     >
-                        UX/UI Developer crafting spatial, interactive, and human-centered digital experiences.
+                        Pushing the boundaries of the web with WebGL, Shaders, and Immersive Interactions.
                     </motion.p>
                 </div>
-
-                {/* 3D Image - Right Side - Parallax */}
-                <motion.div
-                    style={{ y, opacity }}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.5, ease: "circOut" }}
-                    className="relative h-[500px] md:h-[700px] w-full flex items-center justify-center lg:justify-end"
-                >
-                    <div className="relative w-full h-full max-w-[800px]">
-                        <Image
-                            src="/hero-3d.png"
-                            alt="Futuristic Workspace 3D"
-                            fill
-                            className="object-contain drop-shadow-2xl"
-                            priority
-                        />
-                        {/* Floating Glow Effect behind image */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/20 blur-[120px] -z-10 rounded-full mix-blend-screen" />
-                    </div>
-                </motion.div>
             </div>
 
-            {/* Background Ambience */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/5 blur-[150px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 blur-[150px] pointer-events-none" />
+            {/* Vignette & texture overalys */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-[1]" />
         </section>
     );
 }

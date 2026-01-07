@@ -75,7 +75,7 @@ function Scene() {
 
 export function GlobalBackground() {
     return (
-        <div className="fixed inset-0 z-[-1] pointer-events-none opacity-40">
+        <div className="fixed inset-0 z-[-5] pointer-events-none opacity-30">
             <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: true, alpha: true }}>
                 <Scene />
             </Canvas>
