@@ -1,12 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export function Hero() {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end start"]
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
     return (
-        <section className="relative w-full min-h-screen flex items-center pt-20 overflow-hidden">
+        <section ref={containerRef} className="relative w-full min-h-screen flex items-center pt-20 overflow-hidden">
 
             <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Text Content - Left Side */}
@@ -42,8 +51,9 @@ export function Hero() {
                     </motion.p>
                 </div>
 
-                {/* 3D Image - Right Side */}
+                {/* 3D Image - Right Side - Parallax */}
                 <motion.div
+                    style={{ y, opacity }}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.5, ease: "circOut" }}

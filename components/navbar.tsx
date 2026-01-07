@@ -3,10 +3,12 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Magnetic } from "@/components/magnetic";
 import { cn } from "@/lib/utils";
 
 const navItems = [
     { name: "About", href: "#about" },
+    { name: "Services", href: "#services" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -22,13 +24,15 @@ export function Navbar() {
                 <ul className="flex items-center gap-8">
                     {navItems.map((item) => (
                         <li key={item.name}>
-                            <Link
-                                href={item.href}
-                                className="text-sm font-medium text-muted-foreground hover:text-white transition-colors relative group"
-                            >
-                                {item.name}
-                                <span className="absolute -bottom-1 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-                            </Link>
+                            <Magnetic>
+                                <Link
+                                    href={item.href}
+                                    className="text-sm font-medium text-muted-foreground hover:text-white transition-colors relative group block p-2"
+                                >
+                                    {item.name}
+                                    <span className="absolute bottom-1 left-2 w-[calc(100%-16px)] h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                                </Link>
+                            </Magnetic>
                         </li>
                     ))}
                 </ul>
